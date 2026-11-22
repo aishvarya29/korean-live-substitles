@@ -21,7 +21,7 @@ import pyaudiowpatch as pyaudio
 from faster_whisper import WhisperModel
 
 # ---- Settings you can change -------------------------------------------------
-MODEL_SIZE = "base"      # tiny / base / small / medium. Bigger = better but slower.
+MODEL_SIZE = "small"      # tiny / base / small / medium. Bigger = better but slower.
 DEVICE = "cpu"            # use "cuda" if you have an NVIDIA GPU
 COMPUTE_TYPE = "int8"     # use "float16" with cuda
 CHUNK_SECONDS = 3         # shorter = faster subtitles, but more cut-off words
