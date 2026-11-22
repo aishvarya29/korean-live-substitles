@@ -25,7 +25,7 @@ MODEL_SIZE = "small"      # tiny / base / small / medium. Bigger = better but sl
 DEVICE = "cpu"            # use "cuda" if you have an NVIDIA GPU
 COMPUTE_TYPE = "int8"     # use "float16" with cuda
 CHUNK_SECONDS = 3         # shorter = faster subtitles, but more cut-off words
-SILENCE_LEVEL = 0.005     # chunks quieter than this are skipped
+SILENCE_LEVEL = 0.003     # chunks quieter than this are skipped
 FONT_SIZE = 22
 # -----------------------------------------------------------------------------
 
@@ -124,7 +124,7 @@ def transcribe_loop():
             language="ko",
             vad_filter=True,
             vad_parameters=dict(min_silence_duration_ms=500),
-            beam_size=5,
+            beam_size=1,
             temperature=0.0,
             condition_on_previous_text=False,  # stops repeated/looping text
             no_speech_threshold=0.6,
@@ -132,7 +132,7 @@ def transcribe_loop():
         parts = []
         for s in segments:
             # drop segments Whisper itself thinks are not speech or are low confidence
-            if s.no_speech_prob > 0.6 or s.avg_logprob < -1.0:
+            if s.no_speech_prob > 0.8 or s.avg_logprob < -1.5:
                 continue
             parts.append(s.text.strip())
         text = " ".join(parts).strip()
